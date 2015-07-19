@@ -15,6 +15,7 @@
 		38D15E311B5B4C8A0017F695 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D15E2F1B5B4C8A0017F695 /* LaunchScreen.xib */; };
 		38D15E3D1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D15E3C1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m */; };
 		38D15E471B5BF04C0017F695 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38D15E461B5BF04C0017F695 /* GoogleService-Info.plist */; };
+		38D15E491B5C0FA10017F695 /* rf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38D15E481B5C0FA10017F695 /* rf.jpg */; };
 		DF5AAC2F393FC4224C699606 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6C40EB73773B66F25CE177 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		38D15E3B1B5B4C8A0017F695 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38D15E3C1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JKSocialSharingCollectionTests.m; sourceTree = "<group>"; };
 		38D15E461B5BF04C0017F695 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		38D15E481B5C0FA10017F695 /* rf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rf.jpg; sourceTree = "<group>"; };
 		4F6C40EB73773B66F25CE177 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E18DBC9ECCC4800D83EA201 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FAF04646F5C6C7E062FF4B95 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		38D15E1F1B5B4C8A0017F695 /* JKSocialSharingCollection */ = {
 			isa = PBXGroup;
 			children = (
+				38D15E481B5C0FA10017F695 /* rf.jpg */,
 				38D15E241B5B4C8A0017F695 /* AppDelegate.h */,
 				38D15E251B5B4C8A0017F695 /* AppDelegate.m */,
 				38D15E271B5B4C8A0017F695 /* ViewController.h */,
@@ -228,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38D15E491B5C0FA10017F695 /* rf.jpg in Resources */,
 				38D15E2C1B5B4C8A0017F695 /* Main.storyboard in Resources */,
 				38D15E471B5BF04C0017F695 /* GoogleService-Info.plist in Resources */,
 				38D15E311B5B4C8A0017F695 /* LaunchScreen.xib in Resources */,

@@ -59,14 +59,6 @@
                                     <action selector="manualSharingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kK5-1e-ECm"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YyF-5z-6tK" customClass="GIDSignInButton">
-                                <rect key="frame" x="60" y="334" width="200" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="Gaw-6o-Ru3"/>
-                                    <constraint firstAttribute="height" constant="30" id="r3b-72-ZUv"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9E-VF-5nE">
                                 <rect key="frame" x="60" y="363" width="200" height="30"/>
                                 <constraints>
@@ -80,25 +72,32 @@
                                     <action selector="didTapSignOut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I3U-TF-5ia"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1wO-yp-OZa">
+                                <rect key="frame" x="60" y="391" width="200" height="30"/>
+                                <state key="normal" title="Google Plus Share">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="googlePlusShareButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YEH-rb-lOf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="i1T-5y-xGC" secondAttribute="centerX" id="24Q-iH-Klq"/>
-                            <constraint firstAttribute="centerX" secondItem="YyF-5z-6tK" secondAttribute="centerX" id="B9L-61-rbH"/>
-                            <constraint firstItem="L9E-VF-5nE" firstAttribute="top" secondItem="YyF-5z-6tK" secondAttribute="bottom" constant="-1" id="F8L-Jf-BB6"/>
                             <constraint firstItem="zts-jw-w7F" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="80" id="KYN-mE-bQ7"/>
                             <constraint firstItem="i1T-5y-xGC" firstAttribute="top" secondItem="zts-jw-w7F" secondAttribute="bottom" constant="100" id="VJ2-oc-0Fk"/>
                             <constraint firstAttribute="centerX" secondItem="zts-jw-w7F" secondAttribute="centerX" id="hfm-Rd-AGC"/>
                             <constraint firstAttribute="centerX" secondItem="L9E-VF-5nE" secondAttribute="centerX" id="n5U-ld-5fg"/>
-                            <constraint firstItem="YyF-5z-6tK" firstAttribute="top" secondItem="i1T-5y-xGC" secondAttribute="bottom" constant="30" id="zZ3-8F-22u"/>
+                            <constraint firstItem="L9E-VF-5nE" firstAttribute="top" secondItem="i1T-5y-xGC" secondAttribute="bottom" constant="59" id="v4h-IV-MbV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9na-0s-tU3"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="googlePlusShareButton" destination="1wO-yp-OZa" id="Rqe-MY-2VP"/>
                         <outlet property="manualLoginButton" destination="zts-jw-w7F" id="KDL-Fc-QPN"/>
                         <outlet property="manualSharingButton" destination="i1T-5y-xGC" id="Gfv-rw-NaY"/>
-                        <outlet property="signInButton" destination="YyF-5z-6tK" id="zvP-9V-TXf"/>
                         <outlet property="signOutButton" destination="L9E-VF-5nE" id="qbC-wu-lho"/>
                     </connections>
                 </viewController>

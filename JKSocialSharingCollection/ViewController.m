@@ -12,20 +12,23 @@
 #import <FBSDKShareButton.h>
 #import <FBSDKShareLinkContent.h>
 #import <FBSDKShareDialog.h>
-#import <Google/SignIn.h>
+#import <GooglePlus/GooglePlus.h>
+#import <GoogleOpenSource/GoogleOpenSource.h>
+#import <GPPSignInButton.h>
 #import <FBSDKGraphRequestConnection.h>
 
 static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0fhc.apps.googleusercontent.com";
 
-@interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate, GIDSignInUIDelegate>
+@interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate, GPPSignInDelegate, GPPShareDelegate>
 
 @property (strong, nonatomic) FBSDKLoginButton *loginButton;
 @property (strong, nonatomic) FBSDKAccessToken* accessToken;
 @property (weak, nonatomic) IBOutlet UIButton *manualLoginButton;
 @property (strong, nonatomic) FBSDKShareButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *manualSharingButton;
-@property(weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
+@property (strong, nonatomic) GPPSignInButton *googlePlusSignInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signOutButton;
+@property (weak, nonatomic) IBOutlet UIButton *googlePlusShareButton;
 
 @end
 
@@ -36,26 +39,93 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
     [self setupFacebookLogin];
     [self setupFacebookSharing];
     [self setupGooglePlusLogin];
+    self.googlePlusSignInButton = [[GPPSignInButton alloc] initWithFrame:CGRectMake(80, 500, 200, 44)];
+    self.googlePlusSignInButton.style = kGPPSignInButtonStyleWide;
+    self.googlePlusSignInButton.colorScheme = kGPPSignInButtonColorSchemeDark;
+    [self.googlePlusSignInButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [self.googlePlusSignInButton setTitle:@"Google Plus" forState:UIControlStateNormal];
+    [self.view addSubview:self.googlePlusSignInButton];
 }
 
 - (void)setupGooglePlusLogin {
-    [GIDSignIn sharedInstance].uiDelegate = self;
-    [[GIDSignIn sharedInstance] signInSilently];
+    GPPSignIn *signIn = [GPPSignIn sharedInstance];
+    signIn.delegate = self;
+    signIn.shouldFetchGooglePlusUser = YES;
+    //signIn.shouldFetchGoogleUserEmail = YES;  // Uncomment to get the user's email
     
-    GIDSignIn* sharedIns = [GIDSignIn sharedInstance];
-    self.signInButton.hidden = [sharedIns hasAuthInKeychain];
-    self.signOutButton.hidden = !self.signInButton.hidden;
+    // You previously set kClientId in the "Initialize the Google+ client" step
+    signIn.clientID = kClientId;
+    
+    // Uncomment one of these two statements for the scope you chose in the previous step
+    signIn.scopes = @[ kGTLAuthScopePlusLogin, @"profile"];  // "https://www.googleapis.com/auth/plus.login" scope
+    //signIn.scopes = @[ @"profile" ];            // "profile" scope
+    
+    // Optional: declare signIn.actions, see "app activities"
+    signIn.delegate = self;
+    
+    GPPSignIn* sharedIns = [GPPSignIn sharedInstance];
     
     if ([sharedIns hasAuthInKeychain]) {
-        NSLog(@"User Signed in");
+        [[GPPSignIn sharedInstance] trySilentAuthentication];
     } else {
-        NSLog(@"User Signed out");
+        NSLog(@"Logged in the Google plus for meantime");
+    }
+    
+    self.googlePlusSignInButton.hidden = [sharedIns hasAuthInKeychain];
+    self.signOutButton.hidden = !self.googlePlusSignInButton.hidden;
+    self.googlePlusShareButton.hidden = self.signOutButton.hidden;
+}
+
+#pragma Google Plus share method 
+
+- (IBAction)googlePlusShareButtonPressed:(id)sender {
+    if ([[GPPSignIn sharedInstance] hasAuthInKeychain]) {
+        [GPPShare sharedInstance].delegate = self;
+        id<GPPNativeShareBuilder> shareBuilder = [[GPPShare sharedInstance] nativeShareDialog];
+        [shareBuilder setPrefillText:@"This is Airline info app which will allow you to track airline info"];
+        //[shareBuilder setCallToActionButtonWithLabel:@"SAVE" URL:[NSURL URLWithString:@"https://www.google.com"] deepLinkID:nil];
+        
+        [shareBuilder setURLToShare:[NSURL URLWithString:@"https://www.google.com"]];
+//        [shareBuilder setCallToActionButtonWithLabel:@"RSVP"
+//                                                 URL:[NSURL URLWithString:@"https://www.google.com"]
+//                                          deepLinkID:@"rsvp=4815162342"];
+        
+         #warning You cannot both attach image and set URL to share. Only one of those action is allowed by Google standard.
+        
+        #warning make sure setURLToShare and setCallToActionButtonWithLabel are called together.
+        
+        //UIImage* rfImage = [UIImage imageNamed:@"rf.jpg"];
+        //[shareBuilder attachImage:rfImage];
+        
+//        NSString *fileName = @"samplevideo";
+//        NSString *extension = @"mov";
+//        NSURL *filePath = [[NSBundle mainBundle] URLForResource:fileName withExtension:extension];
+//        [shareBuilder attachVideoURL:filePath];
+        
+        [shareBuilder open];
+    } else {
+        NSLog(@"Please sign in before continuing");
     }
 }
 
+#pragma Delegate method for Google sharing. This callback will be called after sharing is completed. It might or might not be successful.
+
+- (void)finishedSharingWithError:(NSError *)error {
+    NSString *text;
+    if (!error) {
+        text = @"Success";
+    } else if (error.code == kGPPErrorShareboxCanceled) {
+        text = @"Canceled";
+    } else {
+        text = [NSString stringWithFormat:@"Error (%@)", [error localizedDescription]];
+    }
+    NSLog(@"Status: %@", text);
+}
+
+
 #pragma Methods for disconnecting app authorizations from Google+
 - (void)disconnect {
-    [[GIDSignIn sharedInstance] disconnect];
+    [[GPPSignIn sharedInstance] disconnect];
 }
 
 - (void)didDisconnectWithError:(NSError *)error {
@@ -67,9 +137,50 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
     }
 }
 
+#pragma Google Plus sign in delegate methods.
+
+- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
+                   error: (NSError *) error {
+    NSLog(@"Received error %@ and auth object %@",error, auth);
+    
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init];
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:auth];
+    
+    GPPSignIn* sharedIns = [GPPSignIn sharedInstance];
+    self.googlePlusSignInButton.hidden = [sharedIns hasAuthInKeychain];
+    self.signOutButton.hidden = !self.googlePlusSignInButton.hidden;
+    self.googlePlusShareButton.hidden = self.signOutButton.hidden;
+    
+    if ([sharedIns hasAuthInKeychain]) {
+        NSLog(@"User Signed in");
+    } else {
+        NSLog(@"User Signed out");
+    }
+    
+    GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+    
+    [plusService executeQuery:query completionHandler:^(GTLServiceTicket *ticket,
+                                GTLPlusPerson *person,
+                                NSError *error) {
+                if (error) {
+                    GTMLoggerError(@"Error: %@", error);
+                } else {
+                    // Retrieve the display name and "about me" text
+                
+                    NSString *description = [NSString stringWithFormat:
+                                             @"%@\n%@", person.displayName,
+                                             person.aboutMe];
+                }
+            }];
+}
+
 #pragma Google Plus Sign out button
 - (IBAction)didTapSignOut:(id)sender {
-    [[GIDSignIn sharedInstance] signOut];
+    [[GPPSignIn sharedInstance] signOut];
+    self.googlePlusSignInButton.hidden = NO;
+    self.signOutButton.hidden = YES;
+    self.googlePlusShareButton.hidden = YES;
 }
 
 - (void)setupFacebookSharing {

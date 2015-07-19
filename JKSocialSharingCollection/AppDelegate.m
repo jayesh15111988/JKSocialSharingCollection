@@ -9,8 +9,9 @@
 #import "AppDelegate.h"
 #import <Google/SignIn.h>
 #import <FBSDKCoreKit.h>
+#import <GooglePlus/GooglePlus.h>
 
-@interface AppDelegate ()<UIApplicationDelegate, GIDSignInDelegate>
+@interface AppDelegate ()<UIApplicationDelegate, GIDSignInDelegate, GPPDeepLinkDelegate>
 
 @end
 
@@ -24,6 +25,11 @@
     NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     
     [GIDSignIn sharedInstance].delegate = self;
+    
+    // Deep linking for Google Plus returned from the link shared from Google Plus.
+    [GPPDeepLink setDelegate:self];
+    [GPPDeepLink readDeepLinkAfterInstall];
+    
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];;
@@ -63,8 +69,23 @@
                                    sourceApplication:sourceApplication
                                           annotation:annotation]) {
         return YES;
+    } else if ([GPPURLHandler handleURL:url
+                             sourceApplication:sourceApplication
+                             annotation:annotation]) {
+        return YES;
     }
     return NO;
+}
+
+- (void)didReceiveDeepLink: (GPPDeepLink *)deepLink {
+    // An example to handle the deep link data.
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Deep-link Data"
+                          message:[deepLink deepLinkID]
+                          delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
 }
 
 #pragma Delegate methods for Google+ login
