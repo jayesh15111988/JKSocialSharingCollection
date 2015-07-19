@@ -1,0 +1,4 @@
+pod 'FBSDKLoginKit', '~> 4.4'
+pod 'FBSDKShareKit', '~> 4.4'
+pod 'FBSDKCoreKit', '~> 4.4'
+
