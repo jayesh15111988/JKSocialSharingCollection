@@ -12,15 +12,20 @@
 #import <FBSDKShareButton.h>
 #import <FBSDKShareLinkContent.h>
 #import <FBSDKShareDialog.h>
+#import <Google/SignIn.h>
 #import <FBSDKGraphRequestConnection.h>
 
-@interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate>
+static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0fhc.apps.googleusercontent.com";
+
+@interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate, GIDSignInUIDelegate>
 
 @property (strong, nonatomic) FBSDKLoginButton *loginButton;
 @property (strong, nonatomic) FBSDKAccessToken* accessToken;
 @property (weak, nonatomic) IBOutlet UIButton *manualLoginButton;
 @property (strong, nonatomic) FBSDKShareButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *manualSharingButton;
+@property(weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 
 @end
 
@@ -30,6 +35,41 @@
     [super viewDidLoad];
     [self setupFacebookLogin];
     [self setupFacebookSharing];
+    [self setupGooglePlusLogin];
+}
+
+- (void)setupGooglePlusLogin {
+    [GIDSignIn sharedInstance].uiDelegate = self;
+    [[GIDSignIn sharedInstance] signInSilently];
+    
+    GIDSignIn* sharedIns = [GIDSignIn sharedInstance];
+    self.signInButton.hidden = [sharedIns hasAuthInKeychain];
+    self.signOutButton.hidden = !self.signInButton.hidden;
+    
+    if ([sharedIns hasAuthInKeychain]) {
+        NSLog(@"User Signed in");
+    } else {
+        NSLog(@"User Signed out");
+    }
+}
+
+#pragma Methods for disconnecting app authorizations from Google+
+- (void)disconnect {
+    [[GIDSignIn sharedInstance] disconnect];
+}
+
+- (void)didDisconnectWithError:(NSError *)error {
+    if (error) {
+        NSLog(@"Received error %@", error);
+    } else {
+        // The user is signed out and disconnected.
+        // Clean up user data as specified by the Google+ terms.
+    }
+}
+
+#pragma Google Plus Sign out button
+- (IBAction)didTapSignOut:(id)sender {
+    [[GIDSignIn sharedInstance] signOut];
 }
 
 - (void)setupFacebookSharing {
@@ -174,6 +214,5 @@
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     
 }
-
 
 @end
