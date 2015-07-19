@@ -9,13 +9,18 @@
 #import "ViewController.h"
 #import <FBSDKCoreKit.h>
 #import <FBSDKLoginKit.h>
+#import <FBSDKShareButton.h>
+#import <FBSDKShareLinkContent.h>
+#import <FBSDKShareDialog.h>
 #import <FBSDKGraphRequestConnection.h>
 
-@interface ViewController ()<FBSDKLoginButtonDelegate>
+@interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate>
 
 @property (strong, nonatomic) FBSDKLoginButton *loginButton;
 @property (strong, nonatomic) FBSDKAccessToken* accessToken;
 @property (weak, nonatomic) IBOutlet UIButton *manualLoginButton;
+@property (strong, nonatomic) FBSDKShareButton *shareButton;
+@property (weak, nonatomic) IBOutlet UIButton *manualSharingButton;
 
 @end
 
@@ -23,7 +28,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupFacebookLogin];
+    [self setupFacebookSharing];
+}
+
+- (void)setupFacebookSharing {
     
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"https://developers.facebook.com"];
+    content.contentTitle = @"Sample sharing on Facebook";
+    content.contentDescription = @"Sharing Description for sample project";
+    content.imageURL = [NSURL URLWithString:@"http://logodesignerblog.com/wp-content/uploads/2009/01/fedex2.gif"];
+    
+    self.shareButton = [[FBSDKShareButton alloc] init];
+    self.shareButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.shareButton.shareContent = content;
+    [self.view addSubview:self.shareButton];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_shareButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_shareButton)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_manualLoginButton]-20-[_shareButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_manualLoginButton, _shareButton)]];
+}
+
+- (void)setupFacebookLogin {
     if ([FBSDKAccessToken currentAccessToken]) {
         // User is logged in, do work such as go to next view controller.
     }
@@ -37,7 +63,7 @@
         NSLog(@"User is already logged in");
         NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
         [parameters setValue:@"id, name, email, gender, languages" forKey:@"fields"];
-    
+        
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
             NSLog(@"Fetched User %@", result);
         }];
@@ -124,5 +150,30 @@
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
     
 }
+
+- (IBAction)manualSharingButtonPressed:(id)sender {
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"https://developers.facebook.com"];
+    content.contentTitle = @"Sample sharing on Facebook";
+    content.contentDescription = @"Sharing Description for sample project";
+    content.imageURL = [NSURL URLWithString:@"http://logodesignerblog.com/wp-content/uploads/2009/01/fedex2.gif"];
+
+    [FBSDKShareDialog showFromViewController:self
+                                 withContent:content
+                                    delegate:self];
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results {
+    
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error {
+    
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
+    
+}
+
 
 @end
