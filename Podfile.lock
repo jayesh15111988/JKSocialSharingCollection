@@ -5,6 +5,9 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
+  - Fabric (1.2.8):
+    - Fabric/Base (= 1.2.8)
+  - Fabric/Base (1.2.8)
   - FBSDKCoreKit (4.4.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.4.0)
@@ -41,16 +44,26 @@ PODS:
   - GoogleSymbolUtilities (1.0.0)
   - GoogleUtilities (1.0.1):
     - GoogleSymbolUtilities (~> 1.0)
+  - OAuthConsumer (1.0.3)
+  - STTwitter (0.2.1)
+  - TwitterCore (1.8.1)
+  - TwitterKit (1.8.1)
 
 DEPENDENCIES:
+  - Fabric
   - FBSDKCoreKit (~> 4.4)
   - FBSDKLoginKit (~> 4.4)
   - FBSDKShareKit (~> 4.4)
   - google-plus-ios-sdk (~> 1.7)
   - Google/SignIn
+  - OAuthConsumer
+  - STTwitter (~> 0.2)
+  - TwitterCore
+  - TwitterKit
 
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  Fabric: a9eabe53915e9f1db55a84dd2838737928675878
   FBSDKCoreKit: 75bdd75c980e811db218488d99dd93b7740f4474
   FBSDKLoginKit: 02a9254a4c132412fa03577b0d53e936d068a7fb
   FBSDKShareKit: a42865f20ba2d1cc548c4d0f73ad22cff6377ddb
@@ -62,5 +75,9 @@ SPEC CHECKSUMS:
   GoogleSignIn: f26abd6d5bccb35f44528cc4f75a9014ddd213d0
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
   GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
+  OAuthConsumer: 9e99725d1d58d076ed13e6010a2d74f82e25e4cc
+  STTwitter: 7b348a4600eb9f868a3d1c9031b4fd8533d123e7
+  TwitterCore: 0a26fb8054bc23d8986344d3dcb6602255b6aec5
+  TwitterKit: 88daaebdb8bfb5847d76d8ae159841248427931d
 
 COCOAPODS: 0.37.2

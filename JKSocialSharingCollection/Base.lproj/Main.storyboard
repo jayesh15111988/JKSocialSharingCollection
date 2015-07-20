@@ -81,6 +81,22 @@
                                     <action selector="googlePlusShareButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YEH-rb-lOf"/>
                                 </connections>
                             </button>
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FOB-nK-xIx">
+                                <rect key="frame" x="7" y="72" width="307" height="249"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="qyq-zK-fbR"/>
+                                </connections>
+                            </webView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-Ja-NpZ">
+                                <rect key="frame" x="137" y="430" width="118" height="30"/>
+                                <state key="normal" title="Post to twitter">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="postTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4bW-VD-qDd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -99,6 +115,7 @@
                         <outlet property="manualLoginButton" destination="zts-jw-w7F" id="KDL-Fc-QPN"/>
                         <outlet property="manualSharingButton" destination="i1T-5y-xGC" id="Gfv-rw-NaY"/>
                         <outlet property="signOutButton" destination="L9E-VF-5nE" id="qbC-wu-lho"/>
+                        <outlet property="webview" destination="FOB-nK-xIx" id="RoN-RS-xNs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

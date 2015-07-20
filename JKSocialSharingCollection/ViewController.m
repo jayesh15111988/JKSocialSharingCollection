@@ -17,18 +17,38 @@
 #import <GPPSignInButton.h>
 #import <FBSDKGraphRequestConnection.h>
 
+#import <OAuthConsumer/OAuthConsumer.h>
+#import <OAToken.h>
+#import <OAConsumer.h>
+#import <TwitterKit/TWTRComposer.h>
+#import <TwitterKit/TWTRLogInButton.h>
+#import <Twitter/Twitter.h>
+#import <TwitterKit/Twitter.h>
+#import <TwitterKit/TWTRTweetView.h>
+#import <STTwitter.h>
+
 static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0fhc.apps.googleusercontent.com";
+
+static NSString *client_id = @"XDHVqzmAg23XZ4OAeAna3GosK";
+static NSString *secret = @"bB4lKv2qlVbvTmQp6qvzEWwOmUgkFip5f97eSGzpHDZ9O0ZUrw";
+static NSString *callback = @"http://codegerms.com/callback";
 
 @interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate, GPPSignInDelegate, GPPShareDelegate>
 
 @property (strong, nonatomic) FBSDKLoginButton *loginButton;
-@property (strong, nonatomic) FBSDKAccessToken* accessToken;
+@property (strong, nonatomic) FBSDKAccessToken* accessToken1;
 @property (weak, nonatomic) IBOutlet UIButton *manualLoginButton;
 @property (strong, nonatomic) FBSDKShareButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *manualSharingButton;
 @property (strong, nonatomic) GPPSignInButton *googlePlusSignInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 @property (weak, nonatomic) IBOutlet UIButton *googlePlusShareButton;
+
+@property (nonatomic,strong) OAConsumer* consumer;
+@property (nonatomic,strong) OAToken* requestToken;
+@property (nonatomic,strong) OAToken* accessToken;
+@property (nonatomic, retain) IBOutlet UIWebView *webview;
+
 
 @end
 
@@ -45,7 +65,135 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
     [self.googlePlusSignInButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.googlePlusSignInButton setTitle:@"Google Plus" forState:UIControlStateNormal];
     [self.view addSubview:self.googlePlusSignInButton];
+    [self setupOAuthRequest];
 }
+
+- (void)setupOAuthRequest {
+    self.consumer = [[OAConsumer alloc] initWithKey:client_id secret:secret];
+    NSURL* requestTokenUrl = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
+    OAMutableURLRequest* requestTokenRequest = [[OAMutableURLRequest alloc] initWithURL:requestTokenUrl
+                                                                               consumer:self.consumer
+                                                                                  token:nil
+                                                                                  realm:nil
+                                                                      signatureProvider:nil];
+    OARequestParameter* callbackParam = [[OARequestParameter alloc] initWithName:@"oauth_callback" value:callback];
+    [requestTokenRequest setHTTPMethod:@"POST"];
+    [requestTokenRequest setParameters:[NSArray arrayWithObject:callbackParam]];
+    OADataFetcher* dataFetcher = [[OADataFetcher alloc] init];
+    [dataFetcher fetchDataWithRequest:requestTokenRequest
+                             delegate:self
+                    didFinishSelector:@selector(didReceiveRequestToken:data:)
+                      didFailSelector:@selector(didFailOAuth:error:)];
+}
+
+#pragma Twitter OAuth delegate methods after request
+- (void)didReceiveRequestToken:(OAServiceTicket*)ticket data:(NSData*)data {
+    NSString* httpBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    self.requestToken = [[OAToken alloc] initWithHTTPResponseBody:httpBody];
+    
+    NSURL* authorizeUrl = [NSURL URLWithString:@"https://api.twitter.com/oauth/authorize"];
+    OAMutableURLRequest* authorizeRequest = [[OAMutableURLRequest alloc] initWithURL:authorizeUrl
+                                                                            consumer:nil
+                                                                               token:nil
+                                                                               realm:nil
+                                                                   signatureProvider:nil];
+    NSString* oauthToken = self.requestToken.key;
+    OARequestParameter* oauthTokenParam = [[OARequestParameter alloc] initWithName:@"oauth_token" value:oauthToken];
+    [authorizeRequest setParameters:[NSArray arrayWithObject:oauthTokenParam]];
+    
+    [self.webview loadRequest:authorizeRequest];
+}
+
+#pragma WebView delegate methods
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+    //  [indicator startAnimating];
+    NSString *temp = [NSString stringWithFormat:@"%@",request];
+    //  BOOL result = [[temp lowercaseString] hasPrefix:@"http://codegerms.com/callback"];
+    // if (result) {
+    NSRange textRange = [[temp lowercaseString] rangeOfString:[@"http://codegerms.com/callback" lowercaseString]];
+    
+    if(textRange.location != NSNotFound){
+        
+        // Extract oauth_verifier from URL query
+        NSString* verifier = nil;
+        NSArray* urlParams = [[[request URL] query] componentsSeparatedByString:@"&"];
+        for (NSString* param in urlParams) {
+            NSArray* keyValue = [param componentsSeparatedByString:@"="];
+            NSString* key = [keyValue objectAtIndex:0];
+            if ([key isEqualToString:@"oauth_verifier"]) {
+                verifier = [keyValue objectAtIndex:1];
+                break;
+            }
+        }
+        
+        if (verifier) {
+            NSURL* accessTokenUrl = [NSURL URLWithString:@"https://api.twitter.com/oauth/access_token"];
+            OAMutableURLRequest* accessTokenRequest = [[OAMutableURLRequest alloc] initWithURL:accessTokenUrl consumer:self.consumer token:self.requestToken realm:nil signatureProvider:nil];
+            OARequestParameter* verifierParam = [[OARequestParameter alloc] initWithName:@"oauth_verifier" value:verifier];
+            [accessTokenRequest setHTTPMethod:@"POST"];
+            [accessTokenRequest setParameters:[NSArray arrayWithObject:verifierParam]];
+            OADataFetcher* dataFetcher = [[OADataFetcher alloc] init];
+            [dataFetcher fetchDataWithRequest:accessTokenRequest
+                                     delegate:self
+                            didFinishSelector:@selector(didReceiveAccessToken:data:)
+                              didFailSelector:@selector(didFailOAuth:error:)];
+        } else {
+            // ERROR!
+        }
+        
+        [webView removeFromSuperview];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)webView:(UIWebView*)webView didFailLoadWithError:(NSError*)error {
+    // ERROR!
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    // [indicator stopAnimating];
+}
+
+- (void)didReceiveAccessToken:(OAServiceTicket*)ticket data:(NSData*)data {
+    NSString* httpBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    self.accessToken = [[OAToken alloc] initWithHTTPResponseBody:httpBody];
+    // WebServiceSocket *connection = [[WebServiceSocket alloc] init];
+    //  connection.delegate = self;
+    NSString *pdata = [NSString stringWithFormat:@"type=2&token=%@&secret=%@&login=%@", self.accessToken.key, self.accessToken.secret, @"1"];
+    NSLog(@"Access token key %@ and Secret %@", self.accessToken.key, self.accessToken.secret);
+    
+    //codegerms.com
+    
+    if (self.accessToken) {
+        NSURL* userdatarequestu = [NSURL URLWithString:@"https://api.twitter.com/1.1/account/verify_credentials.json"];
+        OAMutableURLRequest* requestTokenRequest = [[OAMutableURLRequest alloc] initWithURL:userdatarequestu
+                                                                                   consumer:self.consumer
+                                                                                      token:self.accessToken
+                                                                                      realm:nil
+                                                                          signatureProvider:nil];
+        
+        [requestTokenRequest setHTTPMethod:@"GET"];
+        OADataFetcher* dataFetcher = [[OADataFetcher alloc] init];
+        [dataFetcher fetchDataWithRequest:requestTokenRequest
+                                 delegate:self
+                        didFinishSelector:@selector(didReceiveuserdata:data:)
+                          didFailSelector:@selector(didFailOdatah:error:)];    } else {
+            // ERROR!
+        }
+    
+}
+
+- (void)didReceiveuserdata:(OAServiceTicket*)ticket data:(NSData*)data {
+    NSString* httpBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    
+}
+
+- (void)didFailOAuth:(OAServiceTicket*)ticket error:(NSError*)error {
+    // ERROR!
+}
+
 
 - (void)setupGooglePlusLogin {
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
@@ -205,11 +353,11 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
         // User is logged in, do work such as go to next view controller.
     }
     
-    self.accessToken = [FBSDKAccessToken currentAccessToken];
+    self.accessToken1 = [FBSDKAccessToken currentAccessToken];
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     
     
-    if (self.accessToken) {
+    if (self.accessToken1) {
         [self.manualLoginButton setTitle:@"Logout" forState:UIControlStateNormal];
         NSLog(@"User is already logged in");
         NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
@@ -237,7 +385,7 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FBSDKAccessTokenDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSLog(@"User Login status changed");
-        self.accessToken = [FBSDKAccessToken currentAccessToken];
+        self.accessToken1 = [FBSDKAccessToken currentAccessToken];
     }];
 }
 
@@ -269,7 +417,7 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
 - (IBAction)manualLoginFacebookButtonPressed:(id)sender {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     
-    if (!self.accessToken) {
+    if (!self.accessToken1) {
         [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_friends"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
                 // Process error
@@ -324,6 +472,86 @@ static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0
 
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer {
     
+}
+
+- (IBAction)postTapped:(id)sender{
+    //OAToken *token = [[OAToken alloc] initWithKey:client_id secret:secret]; //Set user Oauth access token and secrate key
+    
+    //OAConsumer *consumer = [[OAConsumer alloc] initWithKey:@"36319586-tFS9rtvlJFsPVhN9TLjenbiUQlEDC7H7fOsD5fE8d" secret:@"zXo7icqyYxvna8mL4AuQZ62QELIPN44wrmNzrV9iPNZbb"]; // Application cosumer token and secrate key
+    
+//    NSLog(@"Access token key %@ and Secret %@", self.accessToken.key, self.accessToken.secret);
+//    
+//    // Url for upload pictures
+//    NSURL *finalURL = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/update.json"];
+//                       
+//                       OAMutableURLRequest *theRequest = [[OAMutableURLRequest alloc] initWithURL:finalURL
+//                                                                                         consumer:self.consumer
+//                                                                                            token:self.accessToken
+//                                                                                            realm: nil
+//                                                                                signatureProvider:nil];
+//	
+//    //[theRequest setParameters:@[[OARequestParameter requestParameter:@"status" value:@"asd asd as d a"]]];
+//    
+//                       [theRequest setHTTPMethod:@"POST"];
+//                       [theRequest setTimeoutInterval:120];
+//                       [theRequest setHTTPShouldHandleCookies:NO];
+//                       
+//                       // Set headers for client information, for tracking purposes at Twitter.(This is optional)
+//                       [theRequest setValue:@"TestIphone" forHTTPHeaderField:@"X-Twitter-Client"];
+//                       [theRequest setValue:@"1.0" forHTTPHeaderField:@"X-Twitter-Client-Version"];
+//                       //[theRequest setValue:@"http://www.TestIphone.com/" forHTTPHeaderField:@"X-Twitter-Client-URL"];
+//                       
+//                       NSString *boundary = @"--Hi all, First Share"; // example taken and implemented.
+//                       NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+//                       [theRequest setValue:contentType forHTTPHeaderField:@"content-type"];
+//                       
+//                       NSMutableData *body = [NSMutableData data];
+//                       
+//                       [body appendData:[[NSString stringWithFormat:@"--%@\r\n\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"status\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    [body appendData:[[NSString stringWithFormat:@"%@",@"s dsa d asd a d 2324234"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    
+//                       [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//                       [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//                       [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media[]\"; filename=\"rf.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//                       [body appendData:[[NSString stringWithFormat:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//                       [body appendData:[NSData dataWithData:UIImageJPEGRepresentation([UIImage imageNamed:@"rf.jpg"], 0.5)]];
+//                       [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//                       [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//
+//    
+//                       [theRequest prepare];
+//                       
+//                       NSString *oAuthHeader = [theRequest valueForHTTPHeaderField:@"Authorization"];
+//                       [theRequest setHTTPBody:body];
+//    
+//    
+//    
+//                       NSHTTPURLResponse *response = nil;
+//                       NSError *error = nil;
+//                       
+//                       NSData *responseData = [NSURLConnection sendSynchronousRequest:theRequest
+//                                                                    returningResponse:&response                            
+//                                                                                error:&error];
+//                       NSString *responseString = [[NSString alloc] initWithData:responseData                                
+//                                                                        encoding:NSUTF8StringEncoding];
+//    
+    
+    STTwitterAPI *twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:self.consumer.key consumerSecret:self.consumer.secret oauthToken:self.requestToken.key oauthTokenSecret:self.requestToken.secret];
+    
+    [twitter postStatusUpdate:@"test"
+            inReplyToStatusID:nil
+                     latitude:nil
+                    longitude:nil
+                      placeID:nil
+           displayCoordinates:nil
+                     trimUser:nil
+                 successBlock:^(NSDictionary *status) {
+                     // ...
+                 } errorBlock:^(NSError *error) {
+                     // ...
+                 }];
 }
 
 @end

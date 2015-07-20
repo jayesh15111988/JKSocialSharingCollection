@@ -16,6 +16,8 @@
 		38D15E3D1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D15E3C1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m */; };
 		38D15E471B5BF04C0017F695 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38D15E461B5BF04C0017F695 /* GoogleService-Info.plist */; };
 		38D15E491B5C0FA10017F695 /* rf.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 38D15E481B5C0FA10017F695 /* rf.jpg */; };
+		38D15E4B1B5C29780017F695 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D15E4A1B5C29780017F695 /* Twitter.framework */; };
+		38D15E4D1B5C2BBF0017F695 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D15E4C1B5C2BBF0017F695 /* Social.framework */; };
 		DF5AAC2F393FC4224C699606 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6C40EB73773B66F25CE177 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +47,8 @@
 		38D15E3C1B5B4C8A0017F695 /* JKSocialSharingCollectionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JKSocialSharingCollectionTests.m; sourceTree = "<group>"; };
 		38D15E461B5BF04C0017F695 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		38D15E481B5C0FA10017F695 /* rf.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rf.jpg; sourceTree = "<group>"; };
+		38D15E4A1B5C29780017F695 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		38D15E4C1B5C2BBF0017F695 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4F6C40EB73773B66F25CE177 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E18DBC9ECCC4800D83EA201 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FAF04646F5C6C7E062FF4B95 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38D15E4D1B5C2BBF0017F695 /* Social.framework in Frameworks */,
+				38D15E4B1B5C29780017F695 /* Twitter.framework in Frameworks */,
 				DF5AAC2F393FC4224C699606 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +141,8 @@
 		8F01197ACAD86BDF78016778 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38D15E4C1B5C2BBF0017F695 /* Social.framework */,
+				38D15E4A1B5C29780017F695 /* Twitter.framework */,
 				4F6C40EB73773B66F25CE177 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -161,6 +169,7 @@
 				38D15E1A1B5B4C8A0017F695 /* Frameworks */,
 				38D15E1B1B5B4C8A0017F695 /* Resources */,
 				7E0DB54179A08DFC468900FD /* Copy Pods Resources */,
+				38D15E501B5C31BC0017F695 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -249,6 +258,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		38D15E501B5C31BC0017F695 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 2f343d25a537800cb2fddaf7e5d15fb5cb12485b b433785e0faf7f3101c5279f4e31378314c62c9f5470d08bf773624b61374108";
+		};
 		7E0DB54179A08DFC468900FD /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

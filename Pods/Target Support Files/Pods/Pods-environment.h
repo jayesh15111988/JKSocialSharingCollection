@@ -54,6 +54,18 @@
 #define COCOAPODS_VERSION_MINOR_FBSDKShareKit 4
 #define COCOAPODS_VERSION_PATCH_FBSDKShareKit 0
 
+// Fabric
+#define COCOAPODS_POD_AVAILABLE_Fabric
+#define COCOAPODS_VERSION_MAJOR_Fabric 1
+#define COCOAPODS_VERSION_MINOR_Fabric 2
+#define COCOAPODS_VERSION_PATCH_Fabric 8
+
+// Fabric/Base
+#define COCOAPODS_POD_AVAILABLE_Fabric_Base
+#define COCOAPODS_VERSION_MAJOR_Fabric_Base 1
+#define COCOAPODS_VERSION_MINOR_Fabric_Base 2
+#define COCOAPODS_VERSION_PATCH_Fabric_Base 8
+
 // Google/Core
 #define COCOAPODS_POD_AVAILABLE_Google_Core
 #define COCOAPODS_VERSION_MAJOR_Google_Core 1
@@ -101,6 +113,30 @@
 #define COCOAPODS_VERSION_MAJOR_GoogleUtilities 1
 #define COCOAPODS_VERSION_MINOR_GoogleUtilities 0
 #define COCOAPODS_VERSION_PATCH_GoogleUtilities 1
+
+// OAuthConsumer
+#define COCOAPODS_POD_AVAILABLE_OAuthConsumer
+#define COCOAPODS_VERSION_MAJOR_OAuthConsumer 1
+#define COCOAPODS_VERSION_MINOR_OAuthConsumer 0
+#define COCOAPODS_VERSION_PATCH_OAuthConsumer 3
+
+// STTwitter
+#define COCOAPODS_POD_AVAILABLE_STTwitter
+#define COCOAPODS_VERSION_MAJOR_STTwitter 0
+#define COCOAPODS_VERSION_MINOR_STTwitter 2
+#define COCOAPODS_VERSION_PATCH_STTwitter 1
+
+// TwitterCore
+#define COCOAPODS_POD_AVAILABLE_TwitterCore
+#define COCOAPODS_VERSION_MAJOR_TwitterCore 1
+#define COCOAPODS_VERSION_MINOR_TwitterCore 8
+#define COCOAPODS_VERSION_PATCH_TwitterCore 1
+
+// TwitterKit
+#define COCOAPODS_POD_AVAILABLE_TwitterKit
+#define COCOAPODS_VERSION_MAJOR_TwitterKit 1
+#define COCOAPODS_VERSION_MINOR_TwitterKit 8
+#define COCOAPODS_VERSION_PATCH_TwitterKit 1
 
 // google-plus-ios-sdk
 #define COCOAPODS_POD_AVAILABLE_google_plus_ios_sdk
