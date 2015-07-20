@@ -76,9 +76,36 @@
                              sourceApplication:sourceApplication
                              annotation:annotation]) {
         return YES;
+    } else if ([[url scheme] isEqualToString:@"myapp"]) {
+    
+        NSDictionary *d = [self parametersDictionaryFromQueryString:[url query]];
+    
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"update_token" object:nil userInfo:d];
+        
+        return YES;
     }
     return NO;
 }
+
+- (NSDictionary *)parametersDictionaryFromQueryString:(NSString *)queryString {
+    
+    NSMutableDictionary *md = [NSMutableDictionary dictionary];
+    
+    NSArray *queryComponents = [queryString componentsSeparatedByString:@"&"];
+    
+    for(NSString *s in queryComponents) {
+        NSArray *pair = [s componentsSeparatedByString:@"="];
+        if([pair count] != 2) continue;
+        
+        NSString *key = pair[0];
+        NSString *value = pair[1];
+        
+        md[key] = value;
+    }
+    
+    return md;
+}
+
 
 - (void)didReceiveDeepLink: (GPPDeepLink *)deepLink {
     // An example to handle the deep link data.

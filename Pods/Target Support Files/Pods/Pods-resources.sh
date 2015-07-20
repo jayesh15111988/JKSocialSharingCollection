@@ -61,13 +61,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
   install_resource "TwitterKit/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
   install_resource "google-plus-ios-sdk/google-plus-ios-sdk-1.7.1/GooglePlus.bundle"
-  install_resource "${BUILT_PRODUCTS_DIR}/OAuthConsumer.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
   install_resource "TwitterKit/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
   install_resource "google-plus-ios-sdk/google-plus-ios-sdk-1.7.1/GooglePlus.bundle"
-  install_resource "${BUILT_PRODUCTS_DIR}/OAuthConsumer.bundle"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

@@ -24,16 +24,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-OAuthConsumer-OAuthConsumer.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-OAuthConsumer.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-STTwitter.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5477C28D07EAA18A4014F54B</key>
+		<key>3D92AA1CAB7F768B537C2EDA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>59FBFA1F60B62354F870CE95</key>
+		<key>60E4BAC0F8B61B26D663C457</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5A610C19345C78E9F792BFF7</key>
+		<key>9386946FB41DB3521C853F66</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5FF6ACC747117B15FBB1FC45</key>
+		<key>F3FCE3D3A1E09344BC3F1989</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6956F955C1900E1C284E2FB6</key>
+		<key>F4CA2A4EFFB9EBA1EA66B802</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A2C67398B517D8BB3D580ECF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B4A5A1361F9025F26491DE5C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E5FAB1FD3D70590BCF9A6687</key>
+		<key>FC2AB83215996A1AE0E01007</key>
 		<dict>
 			<key>primary</key>
 			<true/>

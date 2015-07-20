@@ -114,12 +114,6 @@
 #define COCOAPODS_VERSION_MINOR_GoogleUtilities 0
 #define COCOAPODS_VERSION_PATCH_GoogleUtilities 1
 
-// OAuthConsumer
-#define COCOAPODS_POD_AVAILABLE_OAuthConsumer
-#define COCOAPODS_VERSION_MAJOR_OAuthConsumer 1
-#define COCOAPODS_VERSION_MINOR_OAuthConsumer 0
-#define COCOAPODS_VERSION_PATCH_OAuthConsumer 3
-
 // STTwitter
 #define COCOAPODS_POD_AVAILABLE_STTwitter
 #define COCOAPODS_VERSION_MAJOR_STTwitter 0
