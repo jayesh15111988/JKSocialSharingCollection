@@ -1,7 +1,4 @@
 pod 'STTwitter', '~> 0.2'
-pod 'Fabric'
-pod 'TwitterCore'
-pod 'TwitterKit'
 pod 'google-plus-ios-sdk', '~> 1.7'
 pod 'Google/SignIn'
 pod 'FBSDKLoginKit', '~> 4.4'

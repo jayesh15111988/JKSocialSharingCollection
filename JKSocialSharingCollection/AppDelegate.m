@@ -10,8 +10,6 @@
 #import <Google/SignIn.h>
 #import <FBSDKCoreKit.h>
 #import <GooglePlus/GooglePlus.h>
-#import <Fabric/Fabric.h>
-#import <TwitterKit/TwitterKit.h>
 
 @interface AppDelegate ()<UIApplicationDelegate, GIDSignInDelegate, GPPDeepLinkDelegate>
 
@@ -31,8 +29,6 @@
     // Deep linking for Google Plus returned from the link shared from Google Plus.
     [GPPDeepLink setDelegate:self];
     [GPPDeepLink readDeepLinkAfterInstall];
-    
-    [Fabric with:@[TwitterKit]];
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];;

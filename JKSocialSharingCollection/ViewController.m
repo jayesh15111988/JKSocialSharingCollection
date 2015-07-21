@@ -19,8 +19,9 @@
 
 #import <STTwitter.h>
 
+static NSString* OAUTH_TOKEN_STORE_KEY = @"oauth_token_key";
+static NSString* OAUTH_TOKEN_STORE_SECRET = @"oauth_token_secret";
 static NSString * const kClientId = @"638736319834-d0cfsnhu923iotabns3d8ptpuqlq0fhc.apps.googleusercontent.com";
-
 static NSString *CONSUMER_KEY = @"XDHVqzmAg23XZ4OAeAna3GosK";
 static NSString *CONSUMER_SECRET = @"bB4lKv2qlVbvTmQp6qvzEWwOmUgkFip5f97eSGzpHDZ9O0ZUrw";
 static NSString *callback = @"myapp://twitter_access_tokens/";
@@ -44,6 +45,7 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setupFacebookLogin];
     [self setupFacebookSharing];
     [self setupGooglePlusLogin];
@@ -62,20 +64,32 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 }
 
 - (void)performTwitterLogin {
-    self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@"XDHVqzmAg23XZ4OAeAna3GosK"
-                                                 consumerSecret:@"bB4lKv2qlVbvTmQp6qvzEWwOmUgkFip5f97eSGzpHDZ9O0ZUrw"];
     
-    [_twitter postTokenRequest:^(NSURL *url, NSString *oauthToken) {
-        NSLog(@"-- url: %@", url);
-        NSLog(@"-- oauthToken: %@", oauthToken);
-        [[UIApplication sharedApplication] openURL:url];
-    } authenticateInsteadOfAuthorize:NO
-                    forceLogin:@(NO)
-                    screenName:nil
-                 oauthCallback:callback
-                    errorBlock:^(NSError *error) {
-                        NSLog(@"-- error: %@", [error localizedDescription]);
-                    }];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_KEY]) {
+        self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:CONSUMER_KEY consumerSecret:CONSUMER_SECRET oauthToken:[[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_KEY] oauthTokenSecret:[[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_SECRET]];
+        
+        [self.twitter verifyCredentialsWithUserSuccessBlock:^(NSString *username, NSString *userID) {
+            
+        } errorBlock:^(NSError *error) {
+            
+        }];
+    } else {
+        self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:CONSUMER_KEY
+                                                 consumerSecret:CONSUMER_SECRET];
+        
+        [_twitter postTokenRequest:^(NSURL *url, NSString *oauthToken) {
+            NSLog(@"-- url: %@", url);
+            NSLog(@"-- oauthToken: %@", oauthToken);
+            [[UIApplication sharedApplication] openURL:url];
+        } authenticateInsteadOfAuthorize:YES
+                        forceLogin:@(NO)
+                        screenName:nil
+                     oauthCallback:callback
+                        errorBlock:^(NSError *error) {
+                            NSLog(@"-- error: %@", [error localizedDescription]);
+        }];
+    }
 }
 
 - (void)setOAuthToken:(NSString *)token oauthVerifier:(NSString *)verifier {
@@ -87,6 +101,10 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
         } errorBlock:^(NSError *error) {
             
         }];
+        
+        
+        [[NSUserDefaults standardUserDefaults] setValue:self.twitter.oauthAccessToken forKey:OAUTH_TOKEN_STORE_KEY];
+        [[NSUserDefaults standardUserDefaults] setValue:self.twitter.oauthAccessTokenSecret forKey:OAUTH_TOKEN_STORE_SECRET];
         
         /*
          At this point, the user can use the API and you can read his access tokens with:
@@ -111,7 +129,21 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 
 - (void)performTwitterStatusUpdate {
     
-    [_twitter postStatusUpdate:@"aasdasdasdasasasd1  d as dasd" inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:nil trimUser:nil successBlock:^(NSDictionary *status) {
+//    [_twitter postStatusUpdate:@"aasdasdasdasasasd1  d as dasd" inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:nil trimUser:nil successBlock:^(NSDictionary *status) {
+//        
+//    } errorBlock:^(NSError *error) {
+//        
+//    }];
+    
+    
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rf" ofType:@"jpg"];
+    NSURL* fileURL  = [NSURL fileURLWithPath:filePath];
+    NSData* d = [NSData dataWithContentsOfURL:fileURL];
+    
+    [_twitter postStatusUpdate:@"asd 009999 213 214 234 23 4" inReplyToStatusID:nil mediaURL:fileURL placeID:nil latitude:nil longitude:nil uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+        
+    } successBlock:^(NSDictionary *status) {
         
     } errorBlock:^(NSError *error) {
         
@@ -192,7 +224,6 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     }
     NSLog(@"Status: %@", text);
 }
-
 
 #pragma Methods for disconnecting app authorizations from Google+
 - (void)disconnect {
