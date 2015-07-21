@@ -38,7 +38,6 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 @property (weak, nonatomic) IBOutlet UIButton *googlePlusShareButton;
 @property (strong, nonatomic) STTwitterAPI* twitter;
 
-
 @end
 
 @implementation ViewController
@@ -55,16 +54,19 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     [self.googlePlusSignInButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.googlePlusSignInButton setTitle:@"Google Plus" forState:UIControlStateNormal];
     [self.view addSubview:self.googlePlusSignInButton];
+    self.googlePlusSignInButton.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.googlePlusSignInButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.googlePlusSignInButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-200-[_googlePlusSignInButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_googlePlusSignInButton)]];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:@"update_token" object:nil queue:nil usingBlock:^(NSNotification *notification) {
         NSDictionary* tokenInfo = notification.userInfo;
         [self setOAuthToken:tokenInfo[@"oauth_token"] oauthVerifier:tokenInfo[@"oauth_verifier"]];
     }];
-    [self performTwitterLogin];
 }
 
 - (void)performTwitterLogin {
-    
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_KEY]) {
         self.twitter = [STTwitterAPI twitterAPIWithOAuthConsumerKey:CONSUMER_KEY consumerSecret:CONSUMER_SECRET oauthToken:[[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_KEY] oauthTokenSecret:[[NSUserDefaults standardUserDefaults] objectForKey:OAUTH_TOKEN_STORE_SECRET]];
@@ -127,6 +129,14 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 
 }
 
+- (IBAction)twitterLoginButtonPressed:(id)sender {
+    [self performTwitterLogin];
+}
+
+- (IBAction)postToTwitterPressed:(id)sender {
+    [self performTwitterStatusUpdate];
+}
+
 - (void)performTwitterStatusUpdate {
     
 //    [_twitter postStatusUpdate:@"aasdasdasdasasasd1  d as dasd" inReplyToStatusID:nil latitude:nil longitude:nil placeID:nil displayCoordinates:nil trimUser:nil successBlock:^(NSDictionary *status) {
@@ -141,7 +151,7 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     NSURL* fileURL  = [NSURL fileURLWithPath:filePath];
     NSData* d = [NSData dataWithContentsOfURL:fileURL];
     
-    [_twitter postStatusUpdate:@"asd 009999 213 214 234 23 4" inReplyToStatusID:nil mediaURL:fileURL placeID:nil latitude:nil longitude:nil uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
+    [_twitter postStatusUpdate:@"asasas fsfs df sdfsd  fsf s sdf 4" inReplyToStatusID:nil mediaURL:fileURL placeID:nil latitude:nil longitude:nil uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
         
     } successBlock:^(NSDictionary *status) {
         
@@ -299,17 +309,12 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     [self.view addSubview:self.shareButton];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_shareButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_shareButton)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_manualLoginButton]-20-[_shareButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_manualLoginButton, _shareButton)]];
 }
 
 - (void)setupFacebookLogin {
-    if ([FBSDKAccessToken currentAccessToken]) {
-        // User is logged in, do work such as go to next view controller.
-    }
     
     self.accessToken1 = [FBSDKAccessToken currentAccessToken];
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
-    
     
     if (self.accessToken1) {
         [self.manualLoginButton setTitle:@"Logout" forState:UIControlStateNormal];
@@ -334,6 +339,7 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     id topLayout = self.topLayoutGuide;
     self.loginButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.loginButton];
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_loginButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_loginButton)]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayout]-20-[_loginButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(topLayout, _loginButton)]];
     
@@ -368,38 +374,6 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     }
 }
 
-- (IBAction)manualLoginFacebookButtonPressed:(id)sender {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    
-    if (!self.accessToken1) {
-        [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_friends"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-            if (error) {
-                // Process error
-            } else if (result.isCancelled) {
-                // Handle cancellations
-            } else {
-                // If you ask for multiple permissions at once, you
-                // should check if specific permissions missing
-                if ([result.grantedPermissions containsObject:@"email"]) {
-                    NSLog(@"Email Permission grapnted");
-                }
-                if ([result.grantedPermissions containsObject:@"public_profile"]) {
-                    NSLog(@"Public Profile granted");
-                }
-                if ([result.grantedPermissions containsObject:@"user_friends"]) {
-                    NSLog(@"User Friends granted");
-                }
-                
-                if (!result.grantedPermissions.count) {
-                    NSLog(@"No permission granted to the app");
-                }
-            }
-        }];
-    } else {
-        [login logOut];
-    }
-}
-
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
     
 }
@@ -430,6 +404,39 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 
 - (IBAction)postTapped:(id)sender{
     [self performTwitterStatusUpdate];
+}
+
+// Redundant Methods from the app.
+- (IBAction)manualLoginFacebookButtonPressed:(id)sender {
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    
+    if (!self.accessToken1) {
+        [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_friends"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error) {
+                // Process error
+            } else if (result.isCancelled) {
+                // Handle cancellations
+            } else {
+                // If you ask for multiple permissions at once, you
+                // should check if specific permissions missing
+                if ([result.grantedPermissions containsObject:@"email"]) {
+                    NSLog(@"Email Permission grapnted");
+                }
+                if ([result.grantedPermissions containsObject:@"public_profile"]) {
+                    NSLog(@"Public Profile granted");
+                }
+                if ([result.grantedPermissions containsObject:@"user_friends"]) {
+                    NSLog(@"User Friends granted");
+                }
+                
+                if (!result.grantedPermissions.count) {
+                    NSLog(@"No permission granted to the app");
+                }
+            }
+        }];
+    } else {
+        [login logOut];
+    }
 }
 
 @end

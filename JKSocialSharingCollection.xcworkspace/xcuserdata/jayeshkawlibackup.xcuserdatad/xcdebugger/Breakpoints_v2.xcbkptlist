@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "-loginButton:didCompleteWithResult:error:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "403"
-            endingLineNumber = "403"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-loginButtonDidLogOut:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-loginButton:didCompleteWithResult:error:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "-sharerDidCancel:"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "-sharer:didFailWithError:"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
             landmarkName = "-sharer:didCompleteWithResults:"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "-finishedSharingWithError:"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "-performTwitterStatusUpdate"
             landmarkType = "5">
             <Locations>
@@ -202,11 +202,11 @@
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.708035"
+                  timestampString = "459142215.367448"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
                   offsetFromSymbolStart = "249">
                </Location>
                <Location
@@ -217,11 +217,11 @@
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.708162"
+                  timestampString = "459142215.367599"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "146"
-                  endingLineNumber = "146"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
                   offsetFromSymbolStart = "24">
                </Location>
             </Locations>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "-performTwitterStatusUpdate"
             landmarkType = "5">
             <Locations>
@@ -250,11 +250,11 @@
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.708785"
+                  timestampString = "459142215.368271"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
+                  startingLineNumber = "152"
+                  endingLineNumber = "152"
                   offsetFromSymbolStart = "52">
                </Location>
                <Location
@@ -265,11 +265,11 @@
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.708907"
+                  timestampString = "459142215.368406"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
+                  startingLineNumber = "152"
+                  endingLineNumber = "152"
                   offsetFromSymbolStart = "44">
                </Location>
             </Locations>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138966.192357"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "-performTwitterStatusUpdate"
             landmarkType = "5">
          </BreakpointContent>
@@ -310,27 +310,27 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138958.590986"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "-performTwitterLogin"
             landmarkType = "5">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__37-[ViewController performTwitterLogin]_block_invoke"
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.710385"
+                  timestampString = "459139986.11507"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "74"
@@ -338,14 +338,14 @@
                   offsetFromSymbolStart = "83">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__37-[ViewController performTwitterLogin]_block_invoke_2"
                   moduleName = "JKSocialSharingCollection"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/jayeshkawlibackup/Desktop/git/JKSocialSharingCollection/JKSocialSharingCollection/ViewController.m"
-                  timestampString = "459139028.71052"
+                  timestampString = "459139986.115492"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "74"
@@ -358,15 +358,31 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138978.548482"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "-performTwitterLogin"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "-performTwitterLogin"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,12 +394,108 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JKSocialSharingCollection/ViewController.m"
-            timestampString = "459138982.597256"
+            timestampString = "459142896.170337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "-performTwitterLogin"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "-setupFacebookLogin"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
+            landmarkName = "-setupFacebookLogin"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "-setupFacebookLogin"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "-setupGooglePlusLogin"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "-finishedWithAuth:error:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "-finishedWithAuth:error:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JKSocialSharingCollection/ViewController.m"
+            timestampString = "459142896.170337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
+            landmarkName = "-finishedWithAuth:error:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
