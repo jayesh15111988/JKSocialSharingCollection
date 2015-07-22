@@ -28,11 +28,10 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 
 @interface ViewController ()<FBSDKLoginButtonDelegate, FBSDKSharingDelegate, GPPSignInDelegate, GPPShareDelegate>
 
-@property (strong, nonatomic) FBSDKLoginButton *loginButton;
-@property (strong, nonatomic) FBSDKAccessToken* accessToken1;
-@property (weak, nonatomic) IBOutlet UIButton *manualLoginButton;
-@property (strong, nonatomic) FBSDKShareButton *shareButton;
-@property (weak, nonatomic) IBOutlet UIButton *manualSharingButton;
+@property (strong, nonatomic) FBSDKLoginButton *facebookLoginButton;
+@property (strong, nonatomic) FBSDKShareButton *facebookShareButton;
+@property (strong, nonatomic) FBSDKAccessToken* facebookAccessToken;
+@property (weak, nonatomic) IBOutlet UIButton *facebookSharingButton;
 @property (strong, nonatomic) GPPSignInButton *googlePlusSignInButton;
 @property (weak, nonatomic) IBOutlet UIButton *signOutButton;
 @property (weak, nonatomic) IBOutlet UIButton *googlePlusShareButton;
@@ -64,6 +63,19 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
         NSDictionary* tokenInfo = notification.userInfo;
         [self setOAuthToken:tokenInfo[@"oauth_token"] oauthVerifier:tokenInfo[@"oauth_verifier"]];
     }];
+    
+    self.facebookShareButton = [FBSDKShareButton new];
+    self.facebookShareButton.translatesAutoresizingMaskIntoConstraints = NO;
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:@"http://www.google.com"];
+    content.imageURL = [NSURL URLWithString:@"https://upload.wikimedia.org/wikipedia/commons/4/40/R_federer.jpg"];
+    content.contentTitle = @"Content title is just a faux pass";
+    self.facebookShareButton.shareContent = content;
+    [self.view addSubview:self.facebookShareButton];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-150-[_facebookShareButton(30)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_facebookShareButton)]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.facebookShareButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.facebookShareButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200]];
 }
 
 - (void)performTwitterLogin {
@@ -145,11 +157,8 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 //        
 //    }];
     
-    
-    
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rf" ofType:@"jpg"];
     NSURL* fileURL  = [NSURL fileURLWithPath:filePath];
-    NSData* d = [NSData dataWithContentsOfURL:fileURL];
     
     [_twitter postStatusUpdate:@"asasas fsfs df sdfsd  fsf s sdf 4" inReplyToStatusID:nil mediaURL:fileURL placeID:nil latitude:nil longitude:nil uploadProgressBlock:^(NSInteger bytesWritten, NSInteger totalBytesWritten, NSInteger totalBytesExpectedToWrite) {
         
@@ -278,11 +287,8 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
                 if (error) {
                     GTMLoggerError(@"Error: %@", error);
                 } else {
-                    // Retrieve the display name and "about me" text
-                
-                    NSString *description = [NSString stringWithFormat:
-                                             @"%@\n%@", person.displayName,
-                                             person.aboutMe];
+                    NSString *description = [NSString stringWithFormat: @"%@\n%@", person.displayName, person.aboutMe];
+                    NSLog(@"Person Description %@", description);
                 }
             }];
 }
@@ -303,21 +309,20 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     content.contentDescription = @"Sharing Description for sample project";
     content.imageURL = [NSURL URLWithString:@"http://logodesignerblog.com/wp-content/uploads/2009/01/fedex2.gif"];
     
-    self.shareButton = [[FBSDKShareButton alloc] init];
-    self.shareButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.shareButton.shareContent = content;
-    [self.view addSubview:self.shareButton];
+    self.facebookShareButton = [[FBSDKShareButton alloc] init];
+    self.facebookShareButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.facebookShareButton.shareContent = content;
+    [self.view addSubview:self.facebookShareButton];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_shareButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_shareButton)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_facebookShareButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_facebookShareButton)]];
 }
 
 - (void)setupFacebookLogin {
     
-    self.accessToken1 = [FBSDKAccessToken currentAccessToken];
+    self.facebookAccessToken = [FBSDKAccessToken currentAccessToken];
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     
-    if (self.accessToken1) {
-        [self.manualLoginButton setTitle:@"Logout" forState:UIControlStateNormal];
+    if (self.facebookAccessToken) {
         NSLog(@"User is already logged in");
         NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
         [parameters setValue:@"id, name, email, gender, languages" forKey:@"fields"];
@@ -326,26 +331,25 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
             NSLog(@"Fetched User %@", result);
         }];
     } else {
-        [self.manualLoginButton setTitle:@"Login" forState:UIControlStateNormal];
         NSLog(@"User is not logged in the app");
     }
     
     FBSDKProfile* profile = [FBSDKProfile currentProfile];
     NSLog(@"First name %@ and Last name %@", profile.firstName, profile.lastName);
     
-    self.loginButton = [[FBSDKLoginButton alloc] init];
-    self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
-    self.loginButton.delegate = self;
+    self.facebookLoginButton = [[FBSDKLoginButton alloc] init];
+    self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
+    self.facebookLoginButton.delegate = self;
     id topLayout = self.topLayoutGuide;
-    self.loginButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.loginButton];
+    self.facebookLoginButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.facebookLoginButton];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_loginButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_loginButton)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayout]-20-[_loginButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(topLayout, _loginButton)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[_facebookLoginButton]-20-|" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(_facebookLoginButton)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayout]-20-[_facebookLoginButton(44)]" options:kNilOptions metrics:nil views:NSDictionaryOfVariableBindings(topLayout, _facebookLoginButton)]];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:FBSDKAccessTokenDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSLog(@"User Login status changed");
-        self.accessToken1 = [FBSDKAccessToken currentAccessToken];
+        self.facebookAccessToken = [FBSDKAccessToken currentAccessToken];
     }];
 }
 
@@ -378,7 +382,7 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
     
 }
 
-- (IBAction)manualSharingButtonPressed:(id)sender {
+- (IBAction)facebookSharingButtonPressed:(id)sender {
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     content.contentURL = [NSURL URLWithString:@"https://developers.facebook.com"];
     content.contentTitle = @"Sample sharing on Facebook";
@@ -410,7 +414,7 @@ static NSString *callback = @"myapp://twitter_access_tokens/";
 - (IBAction)manualLoginFacebookButtonPressed:(id)sender {
     FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
     
-    if (!self.accessToken1) {
+    if (!self.facebookAccessToken) {
         [login logInWithReadPermissions:@[@"public_profile", @"email", @"user_friends"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error) {
                 // Process error
