@@ -104,6 +104,7 @@
                         <outlet property="googlePlusShareButton" destination="1wO-yp-OZa" id="Rqe-MY-2VP"/>
                         <outlet property="signOutButton" destination="L9E-VF-5nE" id="qbC-wu-lho"/>
                         <outlet property="twitterLoginButton" destination="DmJ-p7-hiX" id="dOL-Pw-Sb9"/>
+                        <outlet property="twitterShareButton" destination="eDz-Ja-NpZ" id="vqC-OY-j0H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
